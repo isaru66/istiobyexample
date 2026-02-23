@@ -9,7 +9,7 @@
   gtag('js', new Date());
 
   gtag('config', 'G-5D1R5MS6PV');
-</script><meta name="generator" content="Hugo 0.102.3" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
+</script><meta name="generator" content="Hugo 0.156.0"><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
 <link rel="shortcut icon" href="/images/spider-web.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light only">
@@ -31,10 +31,10 @@
 <p>In this example, a wind energy company runs two Kubernetes clusters: one in the cloud, and one in an offshore wind farm. These two clusters are connected together using <a href="https://istio.io/docs/setup/install/multicluster/shared-gateways/"target="_blank">multicluster Istio, with a single control plane</a> running in the cloud cluster (<em>note</em> - this example would also work in a single-cluster setup). There are three services: <code>ingest</code> processes sensor data from the turbines, and writes to an on-prem timeseries database. <code>insights</code> polls the database to detect anomalies in the power supply, sending a message to <code>alerts</code>, running in the cloud, when there is a potential threat to the power grid.</p>
 <p>When the insights service is unable to call home to <code>alerts</code>, we want to ensure that the anomaly does not get lost - ideally, insights will cache the alert, or we use Istio <a href="/retry">retry logic</a> to send the request again. To test what happens in this failure scenario, we will use Istio to inject a fault into the <code>alerts</code> service: first, we&rsquo;ll add a 5-second delay, followed by a <code>500 - Internal Server Error</code>:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-YAML" data-lang="YAML"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">networking.istio.io/v1alpha3</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">VirtualService</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">VirtualService</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">metadata</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">alerts-fault</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">spec</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">alerts</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">http</span><span class="p">:</span><span class="w">
