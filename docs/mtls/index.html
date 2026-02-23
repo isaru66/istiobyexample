@@ -10,13 +10,13 @@
 
   gtag('config', 'G-5D1R5MS6PV');
 </script><meta name="generator" content="Hugo 0.156.0"><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
-<link rel="shortcut icon" href="/images/spider-web.png">
+<link rel="shortcut icon" href="https://isaru66.github.io/istiobyexample/images/spider-web.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>Mutual TLS&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="/istiobyexample/css/core.min.fd4b59419f27d40d470c3b962575cb298e3e4205058dce4c27b62b09f2fae768274c3a927d8158b90ab3b6b9b2a4f9eb.css" integrity="sha384-/UtZQZ8n1A1HDDuWJXXLKY4&#43;QgUFjc5MJ7YrCfL652gnTDqSfYFYuQqztrmypPnr"></head>
+<meta name="supported-color-schemes" content="light only"><title>Mutual TLS&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="https://isaru66.github.io/istiobyexample/css/core.min.fd4b59419f27d40d470c3b962575cb298e3e4205058dce4c27b62b09f2fae768274c3a927d8158b90ab3b6b9b2a4f9eb.css" integrity="sha384-/UtZQZ8n1A1HDDuWJXXLKY4&#43;QgUFjc5MJ7YrCfL652gnTDqSfYFYuQqztrmypPnr"></head>
 <body>
     <div class="base-body max-width"><section id="header" class="header max-body-width">
-    <p><a class="home" href="/"><img class="site-logo" src="/images/istio-logo.png" alt />
+    <p><a class="home" href="https://isaru66.github.io/istiobyexample/"><img class="site-logo" src="https://isaru66.github.io/istiobyexample/images/istio-logo.png" alt />
             <span class="site-name">Istio By Example</span></a></p>
 </section><div id="content" class="flex-body max-body-width"><section class="article-header">
     <h1 class="article-title">Mutual TLS</h1>
@@ -25,7 +25,7 @@
 <article class="markdown-body"><p>A microservices architecture means more requests on the network, and more opportunities for malicious parties to intercept traffic. <a href="https://en.wikipedia.org/wiki/Mutual_authentication"target="_blank">Mutual TLS</a> (mTLS) authentication is a way to encrypt services traffic using <a href="https://www.internetsociety.org/deploy360/tls/basics/"target="_blank">certificates</a>.</p>
 <p>With Istio, you can <a href="https://istio.io/docs/concepts/security/#authentication-policies"target="_blank">enforce mutual TLS automatically</a>, outside of your application code, with a single YAML file. This works because the Istio control plane mounts client certificates into the sidecar proxies for you, so that pods can authenticate with each other.</p>
 <p>Let&rsquo;s enable mutual TLS for the entire service mesh, including the two services (<code>client</code> and <code>server</code>) pictured below.</p>
-<p><a target="_blank" rel="noopener noreferrer" href="/images/mtls.png"><img class="img" src="/images/mtls.png"
+<p><a target="_blank" rel="noopener noreferrer" href="https://isaru66.github.io/istiobyexample/images/mtls.png"><img class="img" src="https://isaru66.github.io/istiobyexample/images/mtls.png"
         alt="Diagram"/></a></p>
 <p>Starting in Istio 1.5, Istio uses <a href="https://istio.io/pt-br/docs/tasks/security/authentication/auto-mtls/"target="_blank">automatic mutual TLS</a>. This means that while services accept both plain-text and TLS traffic, by default, services will <em>send</em> TLS requests within the cluster. This means that the client-to-server above will already be encrypted with the default Istio install. (But HTTP will still work.)</p>
 <p>We can test this by sending a plain HTTP request from the <code>client</code> pod&rsquo;s Istio proxy container to the <code>server</code>. The request succeeds:</p>
@@ -45,7 +45,7 @@ Hello World! /$
 <pre tabindex="0"><code>$ curl http://server:80
 curl: (56) Recv failure: Connection reset by peer
 </code></pre><p>If we view the Kiali service graph for this mesh, we can see a lock icon indicating that traffic is encrypted between <code>client</code> and <code>server</code>:</p>
-<p><a target="_blank" rel="noopener noreferrer" href="/images/mtls-kiali.png"><img class="img" src="/images/mtls-kiali.png"
+<p><a target="_blank" rel="noopener noreferrer" href="https://isaru66.github.io/istiobyexample/images/mtls-kiali.png"><img class="img" src="https://isaru66.github.io/istiobyexample/images/mtls-kiali.png"
         alt/></a></p>
 <p><strong>Authentication Flow:</strong></p>
 <ol>

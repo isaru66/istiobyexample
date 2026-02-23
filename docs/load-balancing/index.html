@@ -10,13 +10,13 @@
 
   gtag('config', 'G-5D1R5MS6PV');
 </script><meta name="generator" content="Hugo 0.156.0"><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
-<link rel="shortcut icon" href="/images/spider-web.png">
+<link rel="shortcut icon" href="https://isaru66.github.io/istiobyexample/images/spider-web.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>Load Balancing&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="/istiobyexample/css/core.min.fd4b59419f27d40d470c3b962575cb298e3e4205058dce4c27b62b09f2fae768274c3a927d8158b90ab3b6b9b2a4f9eb.css" integrity="sha384-/UtZQZ8n1A1HDDuWJXXLKY4&#43;QgUFjc5MJ7YrCfL652gnTDqSfYFYuQqztrmypPnr"></head>
+<meta name="supported-color-schemes" content="light only"><title>Load Balancing&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="https://isaru66.github.io/istiobyexample/css/core.min.fd4b59419f27d40d470c3b962575cb298e3e4205058dce4c27b62b09f2fae768274c3a927d8158b90ab3b6b9b2a4f9eb.css" integrity="sha384-/UtZQZ8n1A1HDDuWJXXLKY4&#43;QgUFjc5MJ7YrCfL652gnTDqSfYFYuQqztrmypPnr"></head>
 <body>
     <div class="base-body max-width"><section id="header" class="header max-body-width">
-    <p><a class="home" href="/"><img class="site-logo" src="/images/istio-logo.png" alt />
+    <p><a class="home" href="https://isaru66.github.io/istiobyexample/"><img class="site-logo" src="https://isaru66.github.io/istiobyexample/images/istio-logo.png" alt />
             <span class="site-name">Istio By Example</span></a></p>
 </section><div id="content" class="flex-body max-body-width"><section class="article-header">
     <h1 class="article-title">Load Balancing</h1>
@@ -27,7 +27,7 @@
 <p>Envoy supports multiple load balancing methods, including <a href="https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/upstream/load_balancing/load_balancers#random"target="_blank">random</a>, <a href="https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/upstream/load_balancing/load_balancers#weighted-round-robin"target="_blank">round-robin</a>, and <a href="https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/upstream/load_balancing/load_balancers#weighted-least-request"target="_blank">least request</a>.</p>
 <p>Let&rsquo;s see how to use Istio to add <a href="https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/upstream/load_balancing/load_balancers#weighted-least-request"target="_blank"><strong>least request</strong></a> load balancing for a service called <code>payments</code>, which processes all transactions for a web <code>frontend</code>. The payments service is backed by three pods.</p>
 <p>In this least request algorithm, the client-side Envoy will first choose two instances at random. Then, it will forward the request to the instance with the fewest number of active requests, to help ensure even load balancing across all instances.</p>
-<p><a target="_blank" rel="noopener noreferrer" href="/images/lb-least-requests.png"><img class="img" src="/images/lb-least-requests.png"
+<p><a target="_blank" rel="noopener noreferrer" href="https://isaru66.github.io/istiobyexample/images/lb-least-requests.png"><img class="img" src="https://isaru66.github.io/istiobyexample/images/lb-least-requests.png"
         alt="load balancing"/></a></p>
 <p>To enable this functionality, we create an Istio <a href="https://istio.io/docs/reference/config/networking/v1alpha3/destination-rule/"target="_blank">DestinationRule</a> with a <a href="https://istio.io/docs/reference/config/networking/v1alpha3/destination-rule/#LoadBalancerSettings-SimpleLB"target="_blank"><code>LEAST_CONN</code></a> load balancer:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-YAML" data-lang="YAML"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">networking.istio.io/v1alpha3</span><span class="w">

@@ -10,13 +10,13 @@
 
   gtag('config', 'G-5D1R5MS6PV');
 </script><meta name="generator" content="Hugo 0.156.0"><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
-<link rel="shortcut icon" href="/images/spider-web.png">
+<link rel="shortcut icon" href="https://isaru66.github.io/istiobyexample/images/spider-web.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>Database Traffic&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="/istiobyexample/css/core.min.fd4b59419f27d40d470c3b962575cb298e3e4205058dce4c27b62b09f2fae768274c3a927d8158b90ab3b6b9b2a4f9eb.css" integrity="sha384-/UtZQZ8n1A1HDDuWJXXLKY4&#43;QgUFjc5MJ7YrCfL652gnTDqSfYFYuQqztrmypPnr"></head>
+<meta name="supported-color-schemes" content="light only"><title>Database Traffic&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="https://isaru66.github.io/istiobyexample/css/core.min.fd4b59419f27d40d470c3b962575cb298e3e4205058dce4c27b62b09f2fae768274c3a927d8158b90ab3b6b9b2a4f9eb.css" integrity="sha384-/UtZQZ8n1A1HDDuWJXXLKY4&#43;QgUFjc5MJ7YrCfL652gnTDqSfYFYuQqztrmypPnr"></head>
 <body>
     <div class="base-body max-width"><section id="header" class="header max-body-width">
-    <p><a class="home" href="/"><img class="site-logo" src="/images/istio-logo.png" alt />
+    <p><a class="home" href="https://isaru66.github.io/istiobyexample/"><img class="site-logo" src="https://isaru66.github.io/istiobyexample/images/istio-logo.png" alt />
             <span class="site-name">Istio By Example</span></a></p>
 </section><div id="content" class="flex-body max-body-width"><section class="article-header">
     <h1 class="article-title">Database Traffic</h1>
@@ -24,7 +24,7 @@
 <div class="flex-body">
 <article class="markdown-body"><p>Applications often span multiple environments, and databases are a great example. You might choose to run your database <a href="https://cloud.google.com/blog/products/databases/to-run-or-not-to-run-a-database-on-kubernetes-what-to-consider"target="_blank">outside of Kubernetes</a> for legacy or storage reasons, or you might use a managed database service.</p>
 <p>But fear not! You can still add external databases to your Istio service mesh. Let&rsquo;s see how.</p>
-<p><a target="_blank" rel="noopener noreferrer" href="/images/databases-diagram.png"><img class="img" src="/images/databases-diagram.png"
+<p><a target="_blank" rel="noopener noreferrer" href="https://isaru66.github.io/istiobyexample/images/databases-diagram.png"><img class="img" src="https://isaru66.github.io/istiobyexample/images/databases-diagram.png"
         alt="diagram"/></a></p>
 <p>Here, we have a <code>plants</code> service running inside a Kubernetes cluster, with Istio enabled. <code>plants</code> writes inventory to a <a href="https://firebase.google.com/docs/firestore"target="_blank">Firestore</a> NoSQL database running in Google Cloud, using the Golang client library for Firestore. Its logs look like this:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">writing a new plant to Firestore...
@@ -44,7 +44,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">location</span><span class="p">:</span><span class="w"> </span><span class="l">MESH_EXTERNAL</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">resolution</span><span class="p">:</span><span class="w"> </span><span class="l">DNS</span><span class="w">
 </span></span></span></code></pre></div><p>From here, we can see Firestore appear in Istio&rsquo;s <a href="https://istio.io/docs/tasks/telemetry/kiali/"target="_blank">service graph</a>.</p>
-<p><a target="_blank" rel="noopener noreferrer" href="/images/databases-kiali-no-vs.png"><img class="img" src="/images/databases-kiali-no-vs.png"
+<p><a target="_blank" rel="noopener noreferrer" href="https://isaru66.github.io/istiobyexample/images/databases-kiali-no-vs.png"><img class="img" src="https://isaru66.github.io/istiobyexample/images/databases-kiali-no-vs.png"
         alt="kiali"/></a></p>
 <p>Note that the traffic appears as TCP because the sidecar proxy for <code>plants</code> is receiving the firestore TLS traffic <a href="https://github.com/istio/istio/issues/14933"target="_blank">as plain TCP</a>. The edge of the graph denote the number of request throughput to Firestore, in bits per second.</p>
 <p>Now let&rsquo;s say we want to test <code>plants</code>&rsquo;s behavior when it cannot connect to the database. We can do this with Istio, without changing any application code.</p>
@@ -67,7 +67,7 @@
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">writing a new plant to Firestore...
 </span></span><span class="line"><span class="cl">🚫 Failed adding plant: rpc error: <span class="nv">code</span> <span class="o">=</span> Unavailable <span class="nv">desc</span> <span class="o">=</span> all SubConns are in TransientFailure
 </span></span></code></pre></div><p>And in the service graph, we can see that the <code>firestore</code> node has a purple <code>VirtualService</code> icon, meaning we&rsquo;ve applied an Istio traffic rule against that service. Eventually, throughput to firestore will appear as <code>0</code> over the last minute, since we&rsquo;ve redirected all outgoing connections to the database.</p>
-<p><a target="_blank" rel="noopener noreferrer" href="/images/databases-kiali.png"><img class="img" src="/images/databases-kiali.png"
+<p><a target="_blank" rel="noopener noreferrer" href="https://isaru66.github.io/istiobyexample/images/databases-kiali.png"><img class="img" src="https://isaru66.github.io/istiobyexample/images/databases-kiali.png"
         alt="kiali"/></a></p>
 <p>Note that you can also use Istio to manage traffic for databases <em>inside</em> the cluster, including Redis, SQL, and <a href="https://istio.io/blog/2018/egress-mongo/"target="_blank">MongoDB</a>. See the Istio docs to learn more.</p>
 </article>

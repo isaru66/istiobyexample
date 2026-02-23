@@ -1,4 +1,5 @@
 baseURL = "https://isaru66.github.io/istiobyexample/"
+canonifyURLs = true
 title = "Istio By Example"
 theme = "hugo-notepadium"
 copyright = ""

@@ -10,13 +10,13 @@
 
   gtag('config', 'G-5D1R5MS6PV');
 </script><meta name="generator" content="Hugo 0.156.0"><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
-<link rel="shortcut icon" href="/images/spider-web.png">
+<link rel="shortcut icon" href="https://isaru66.github.io/istiobyexample/images/spider-web.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>External Services&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="/istiobyexample/css/core.min.fd4b59419f27d40d470c3b962575cb298e3e4205058dce4c27b62b09f2fae768274c3a927d8158b90ab3b6b9b2a4f9eb.css" integrity="sha384-/UtZQZ8n1A1HDDuWJXXLKY4&#43;QgUFjc5MJ7YrCfL652gnTDqSfYFYuQqztrmypPnr"></head>
+<meta name="supported-color-schemes" content="light only"><title>External Services&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="https://isaru66.github.io/istiobyexample/css/core.min.fd4b59419f27d40d470c3b962575cb298e3e4205058dce4c27b62b09f2fae768274c3a927d8158b90ab3b6b9b2a4f9eb.css" integrity="sha384-/UtZQZ8n1A1HDDuWJXXLKY4&#43;QgUFjc5MJ7YrCfL652gnTDqSfYFYuQqztrmypPnr"></head>
 <body>
     <div class="base-body max-width"><section id="header" class="header max-body-width">
-    <p><a class="home" href="/"><img class="site-logo" src="/images/istio-logo.png" alt />
+    <p><a class="home" href="https://isaru66.github.io/istiobyexample/"><img class="site-logo" src="https://isaru66.github.io/istiobyexample/images/istio-logo.png" alt />
             <span class="site-name">Istio By Example</span></a></p>
 </section><div id="content" class="flex-body max-body-width"><section class="article-header">
     <h1 class="article-title">External Services</h1>
@@ -25,8 +25,8 @@
 <article class="markdown-body"><p>A <a href="https://istio.io/docs/concepts/what-is-istio/#what-is-a-service-mesh"target="_blank">service mesh</a> often spans one environment— for instance, one Kubernetes cluster. And together, all the connected services in that environment form the management domain of that mesh, from which you can view metrics and set policies.</p>
 <p>But what if you are also running services <em>outside</em> the cluster, or you depend on external APIs?</p>
 <p>Have no fear. Istio provides a resource called a <a href="https://istio.io/docs/concepts/traffic-management/#service-entries"target="_blank"><code>ServiceEntry</code></a> that lets you logically bring external services into your mesh &ndash; even services you don&rsquo;t own.</p>
-<p>When you create a ServiceEntry for an external hostname, you can view metrics and traces reaching all the way to that external service. You can even set traffic policies like <a href="/retry/">retry logic</a> on those external services. Adding <code>ServiceEntries</code> effectively expands the reach of your Istio management domain. Let&rsquo;s see an example.</p>
-<p><a target="_blank" rel="noopener noreferrer" href="/images/ext-currency.png"><img class="img" src="/images/ext-currency.png"
+<p>When you create a ServiceEntry for an external hostname, you can view metrics and traces reaching all the way to that external service. You can even set traffic policies like <a href="https://isaru66.github.io/istiobyexample/retry/">retry logic</a> on those external services. Adding <code>ServiceEntries</code> effectively expands the reach of your Istio management domain. Let&rsquo;s see an example.</p>
+<p><a target="_blank" rel="noopener noreferrer" href="https://isaru66.github.io/istiobyexample/images/ext-currency.png"><img class="img" src="https://isaru66.github.io/istiobyexample/images/ext-currency.png"
         alt="external currency service"/></a></p>
 <p>Here, we&rsquo;re running a global store website with a <code>currency</code> service, responsible for converting product prices based on a user&rsquo;s locality. We rely on an third-party currency conversion API, the <a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html"target="_blank">European Central Bank</a>, to provide realtime exchange rates.</p>
 <p>We want to set a 3-second timeout on all calls from services inside the mesh to this external API. We&rsquo;ll need two Istio resources to do this.</p>
@@ -60,10 +60,10 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l">www.ecb.europa.eu</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">weight</span><span class="p">:</span><span class="w"> </span><span class="m">100</span><span class="w">
 </span></span></span></code></pre></div><p>Once we create a ServiceEntry for the currency API, we can automatically see <code>ecb.europa.eu</code> in our <a href="https://istio.io/docs/tasks/telemetry/kiali/"target="_blank">Kiali service graph</a> (and instantly know <em>who</em>&rsquo;s calling it):</p>
-<p><a target="_blank" rel="noopener noreferrer" href="/images/ext-servicegraph.png"><img class="img" src="/images/ext-servicegraph.png"
+<p><a target="_blank" rel="noopener noreferrer" href="https://isaru66.github.io/istiobyexample/images/ext-servicegraph.png"><img class="img" src="https://isaru66.github.io/istiobyexample/images/ext-servicegraph.png"
         alt="service graph"/></a></p>
 <p>And we also get an automatic <a href="https://istio.io/docs/tasks/telemetry/metrics/using-istio-dashboard/"target="_blank">Grafana dashboard</a> for this external service, to view data like response codes and latency:</p>
-<p><a target="_blank" rel="noopener noreferrer" href="/images/ext-grafana.png"><img class="img" src="/images/ext-grafana.png"
+<p><a target="_blank" rel="noopener noreferrer" href="https://isaru66.github.io/istiobyexample/images/ext-grafana.png"><img class="img" src="https://isaru66.github.io/istiobyexample/images/ext-grafana.png"
         alt="grafana"/></a></p>
 <p><a href="https://istio.io/docs/tasks/traffic-management/egress/egress-control/#manage-traffic-to-external-services"target="_blank">See the Istio docs</a> to learn more about managing and securing external services.</p>
 </article>
